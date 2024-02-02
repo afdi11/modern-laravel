@@ -8,9 +8,9 @@ use App\Enums\PosisiCalon;
 class ProfilCalon
 {
     public int $nomorUrut;
-    public string $posisi;
+    public PosisiCalon $posisi;
     public string $tempatLahir;
-    public Date $tanggalLahir;
+    public string $tanggalLahir;
     public int $usia;
     public array $karir;
 
@@ -24,6 +24,7 @@ class ProfilCalon
     }
 
     private function hitungUsia($tanggalLahir) {
+        $tanggalLahir = Date::parse($tanggalLahir);
         $now = Date::now();
         $diff = $now->diff($tanggalLahir);
         return $diff->y;
