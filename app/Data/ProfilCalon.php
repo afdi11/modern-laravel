@@ -2,7 +2,6 @@
 
 namespace App\Data;
 
-use Illuminate\Support\Facades\Date;
 use App\Enums\PosisiCalon;
 
 class ProfilCalon
@@ -16,17 +15,10 @@ class ProfilCalon
 
     public function __construct($nomorUrut, $posisi, $tempatLahir, $tanggalLahir, $karir) {
         $this->nomorUrut = $nomorUrut;
-        $this->posisi = PosisiCalon::fromKey($posisi);
+        $this->posisi = $posisi;
         $this->tempatLahir = $tempatLahir;
         $this->tanggalLahir = $tanggalLahir;
-        $this->usia = $this->hitungUsia($tanggalLahir);
+        $this->usia = $tanggalLahir;
         $this->karir = $karir;
-    }
-
-    private function hitungUsia($tanggalLahir) {
-        $tanggalLahir = Date::parse($tanggalLahir);
-        $now = Date::now();
-        $diff = $now->diff($tanggalLahir);
-        return $diff->y;
     }
 }

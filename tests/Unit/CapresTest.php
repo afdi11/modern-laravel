@@ -19,4 +19,12 @@ class CapresTest extends TestCase
         $this->assertTrue(count($capresku) > 0);
         $this->assertFalse(empty($capresku));
     }
+
+    public function test_function_parseTanggalLahir():void
+    {
+        $tempatTanggalLahir = "Madura, 13 Mei 1957";
+        $tanggalLahir = CapresService::parseTanggalLahir($tempatTanggalLahir);
+        $this->assertEquals("13 Mei 1957", $tanggalLahir);
+        $this->assertNotEquals("Madura", $tanggalLahir);
+    }
 }

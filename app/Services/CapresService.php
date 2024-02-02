@@ -20,4 +20,10 @@ class CapresService
 
         return $response->json() ?? [];
     }
+
+    public static function parseTanggalLahir(string $tempatTanggalLahir):string
+    {
+        $tempatTanggalLahir = explode(", ", $tempatTanggalLahir);
+        return $tempatTanggalLahir[1] ?? "";
+    }
 }
