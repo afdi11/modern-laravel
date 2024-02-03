@@ -28,7 +28,8 @@ class CapresTest extends TestCase
         $this->assertNotEquals("Madura", $tanggalLahir);
     }
 
-    public function  test_function_parseKarirDariString():void{
+    public function  test_function_parseKarirDariString() : void
+    {
         $capresku = CapresService::apiCapresku();
 
         // Initialize an empty array to hold karir data
@@ -61,6 +62,27 @@ class CapresTest extends TestCase
                     $this->assertIsNumeric($test->tahunMulai);
                 }
             }
+        }
+    }
+
+    public function test_function_usia():void
+    {
+        $capresku = CapresService::apiCapresku();
+        // Initialize an empty array to hold karir data
+        $dateOfBirth = [];
+
+        // Extract karir from calon_presiden
+        foreach ($capresku['calon_presiden'] as $calon) {
+            $dateOfBirth[] = CapresService::hitungUmur($calon['tempat_tanggal_lahir']);
+        }
+
+        // Extract karir from calon_wakil_presiden
+        foreach ($capresku['calon_wakil_presiden'] as $calon) {
+            $dateOfBirth[] = CapresService::hitungUmur($calon['tempat_tanggal_lahir']);
+        }
+
+        foreach ($dateOfBirth as $dateOfBirth) {
+            $this->assertIsNumeric($dateOfBirth);
         }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Services;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use App\Data\Karir;
+use Illuminate\Support\Carbon;
 use RuntimeException;
 
 class CapresService
@@ -77,5 +78,17 @@ class CapresService
         }
 
         return $result;
+    }
+
+    public static function hitungUmur(string $tempatTanggalLahir): int
+    {
+        if($tempatTanggalLahir != ""){
+            $tempatTanggalLahir = explode(", ", $tempatTanggalLahir);
+            $tahunLahir = explode(" ", $tempatTanggalLahir[1])[2];
+
+            return now()->diffInYears(Carbon::parse($tahunLahir));
+        }else{
+            return 0;
+        }
     }
 }
