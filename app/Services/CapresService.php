@@ -53,7 +53,7 @@ class CapresService
         //Cek Periode
         if (strpos($yearsPart, " dan ") !== false) {
             $periods = explode(" dan ", $yearsPart);
-        } else if (strpos($yearsPart, "/") !== false){
+        } elseif (strpos($yearsPart, "/") !== false){
             $periods = explode("/", $yearsPart);
         }else{
             $periods = array($yearsPart);
@@ -61,11 +61,18 @@ class CapresService
 
         foreach ($periods as $period) {
             // Mengurai masing-masing periode
-            preg_match('/(\d{4})-(\d{4})/', $period, $matches);
+            if(strpos($period, "-") !== false){
+                [$tahunMulai, $tahunAkhir] = explode('-', $period);
+                if(!is_numeric($tahunAkhir)){
+                    $tahunAkhir = now()->year;
+                }
+            }else{
+                $tahunMulai = $period;
+            }
             $result[] = new Karir(
                 $jabatan ?? "",
-                intval($matches[1]),
-                intval($matches[2])
+                $tahunMulai,
+                $tahunAkhir ?? null
             );
         }
 
