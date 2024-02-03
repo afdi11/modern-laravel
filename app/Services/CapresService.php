@@ -5,6 +5,8 @@ namespace App\Services;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use App\Data\Karir;
+use App\Data\ProfilCalon;
+use App\Enums\PosisiCalon;
 use Illuminate\Support\Carbon;
 use RuntimeException;
 
@@ -30,8 +32,6 @@ class CapresService
 
     public static function parseKarir(array $karir):array
     {
-        $data = CapresService::apiCapresku();
-        $karir = $data['calon_presiden'][2]['karir'];
         $newKarir = array();
         foreach ($karir as $value) {
             //Checking
@@ -90,5 +90,25 @@ class CapresService
         }else{
             return 0;
         }
+    }
+
+    public static function dataCapresku(): array
+    {
+        $data = CapresService::apiCapresku();
+        $newData = [];
+        foreach(PosisiCalon::asArray() as $key => $posisi){
+            foreach($data[$key] as $value) {
+                $newData[$value['nomor_urut']][] = new ProfilCalon(
+                    $value['nomor_urut'],
+                    $value['nama_lengkap'],
+                    $posisi,
+                    $value['tempat_tanggal_lahir'],
+                    CapresService::hitungUmur($value['tempat_tanggal_lahir']),
+                    CapresService::parseKarir($value['karir'])
+                );
+            }
+        }
+        return $newData;
+
     }
 }

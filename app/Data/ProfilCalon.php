@@ -7,18 +7,18 @@ use App\Enums\PosisiCalon;
 class ProfilCalon
 {
     public int $nomorUrut;
-    public PosisiCalon $posisi;
-    public string $tempatLahir;
-    public string $tanggalLahir;
+    public string $nama;
+    public string $posisi;
+    public string $tempatTanggalLahir;
     public int $usia;
     public array $karir;
 
-    public function __construct($nomorUrut, $posisi, $tempatLahir, $tanggalLahir, $karir) {
+    public function __construct($nomorUrut,$nama, $posisi, $tempatTanggalLahir, $usia, $karir) {
         $this->nomorUrut = $nomorUrut;
+        $this->nama = $nama;
         $this->posisi = $posisi;
-        $this->tempatLahir = $tempatLahir;
-        $this->tanggalLahir = $tanggalLahir;
-        $this->usia = $tanggalLahir;
+        $this->tempatTanggalLahir = $tempatTanggalLahir;
+        $this->usia = $usia;
         $this->karir = $karir;
     }
 }
